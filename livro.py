@@ -1,6 +1,3 @@
-import pymysql.connections
-import banco
-
 class Livro():
     def __init__(self, conexao):
         self.conexao = conexao
