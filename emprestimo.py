@@ -9,8 +9,8 @@ class Emprestimo():
     def buscaEmprestimoId(self, query):
         try:    
             busca = f"SELECT * FROM emprestimo WHERE id = {query}"
-            self.conexao.executar(busca)
-            return busca
+            resultado = self.conexao.executar(busca)
+            return resultado
         except Exception as e:
             print(f"O erro é {e}")
 
@@ -30,9 +30,8 @@ class Emprestimo():
                     self.livro.atulizarLivro("quantidade_disponivel", novainfo, idlivro)
 
                     registro = f"INSERT INTO emprestimo (livro_id, usuario_id, data_emprestimo, status) VALUES ({idlivro}, {idusuario}, '{hoje}', 'emprestado')"
-                    self.conexao.executar(registro)
 
-                    id_emprestimo = self.conexao.executar(registro) #Por algum motivo duplica o Script e são enviados duas vezes o SQL gerando duplicidade
+                    id_emprestimo = self.conexao.executar(registro) #Por algum motivo duplica o Script e são enviados duas vezes o SQL gerando duplicidadeemprestismo 
                     print(f"Emprestimo realizado! Anone o ID desse emprestimo {id_emprestimo}")
                 else:
                     print(f"Não há livros disponíveis")
@@ -43,13 +42,14 @@ class Emprestimo():
 
     def registraDevolucao(self, idemprestismo):
         try:
-            atualizarstatus = f"UPDATE emprestimo SET status = 'devolvido' WHERE id = {idemprestismo}"
+            hoje = date.today()
+            atualizarstatus = f"UPDATE emprestimo SET status = 'devolvido', data_devolucao = '{hoje}' WHERE id = {idemprestismo}"
             self.conexao.executar(atualizarstatus)
 
-            localizarid = f"SELECT * from emprestismo WHERE id = {idemprestismo}"
-            self.conexao.executar(localizarid)
+            localizarid = f"SELECT * from emprestimo WHERE id = {idemprestismo}"
+            busca = self.conexao.executar(localizarid)
 
-            resultadolivroid = localizarid[0][1]
+            resultadolivroid = busca[0][1]
 
 
             buscalivro = self.livro.buscarPorId(resultadolivroid)
@@ -57,6 +57,14 @@ class Emprestimo():
             novaquantidade = quantidadelivros + 1
 
             self.livro.atulizarLivro("quantidade_disponivel", novaquantidade, resultadolivroid)
+            print("Devolução realizada com sucesso\n")
         except Exception as e:
             print(f"O erro é esse: {e}")
 
+    def listarEmprestimo(self):
+        try:
+            busca = "SELECT * FROM emprestimo"
+            resultado = self.conexao.executar(busca)
+            return resultado
+        except Exception as e:
+            print(f"O erro é esse: {e}")
