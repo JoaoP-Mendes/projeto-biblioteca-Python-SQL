@@ -30,6 +30,7 @@ class Bancodados():
                 return resultado
             else:
                 self.conexao.commit()
+                return cursor.lastrowid
 
 
         except Exception as e:

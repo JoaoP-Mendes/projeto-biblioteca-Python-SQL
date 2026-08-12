@@ -17,6 +17,14 @@ class Usuario():
         except Exception as e:
             print(f"O erro é {e}")
 
+    def buscaUsuarioPorId(self, query):
+        try:
+            busca = f"SELECT * FROM usuario WHERE id = {query}"
+            resultado = self.conexao.executar(busca)
+            return resultado
+        except Exception as e:
+            print(f"O erro é {e}")
+
     def buscarPorNome(self, query):
         try:
             busca = f"SELECT * FROM usuario WHERE nome = '{query}'"
