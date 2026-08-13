@@ -9,21 +9,9 @@ livObj = Livro(connObj)
 userObj = Usuario(connObj)
 empreObj = Emprestimo(connObj,livObj, userObj)
 
-# while True: 
-#     caminho = int(input("O que você deseja verificarr? \n1-- Usuários \n2-- Livros \n3-- Emprestismo\n 4-- Sair\nResposta: "))
-#     if caminho == 1:
-#         subcaminho = int(input("1 - Adicionar usuario \n2 - Listar \n3 - Buscar por nome \n4 - Remover \n0 - voltar \nResposta: "))
-#             if subcaminho == 1: 
-#                 nome = str(input("Digite o nome do usuário: "))
-#                 email = str(input("Digite o email do usuário: "))
-#                 telefone = str(input("Digite o telefone do usuário: "))
-#                 userObj.novoUsuario(nome, email, telefone)
-#                 print("Usuário cadastrado com sucesso! \n")
-#             elif subcaminho == 2:
-
-def menu_livros(livObj):
+def menu_usuario(userObj):
     while True:
-        caminho = int(input("1 - Adicionar usuario \n2 - Listar \n3 - Buscar por nome \n4 - Remover \n0 - voltar \nResposta: "))
+        caminho = int(input("1 - Adicionar usuario \n2 - Listar \n3 - Buscar por nome \n4 - Remover \n5 - Atualizar usuário \n0 - voltar \nResposta: "))
         if caminho == 1: 
             nome = str(input("Digite o nome do usuário: "))
             email = str(input("Digite o email do usuário: "))
@@ -32,13 +20,81 @@ def menu_livros(livObj):
             print("Usuário cadastrado com sucesso! \n")
 
         elif caminho == 2:
-            pessoas = livObj.listarUsuario()
+            pessoas = userObj.listarUsuario()
             for pessoa in pessoas:
                 print(f"{pessoa}\n")
 
         elif caminho == 3:
             busca = str(input("Digite o nome para busca: "))
-            pessoas = livObj.buscaPorNome(busca)
+            pessoas = userObj.buscarPorNome(busca)
+            print(f"{pessoas}\n")
+
+        elif caminho == 4:
+            buscaremocao = int(input("Digite o ID do usuário para remoção: "))
+            userObj.removerUsuario(buscaremocao)
+            print("Usuário removido com sucesso! \n")
+
+        elif caminho == 5:
+            idatulizar = int(input("Digite o ID do usuário para  atualizar: "))
+            oqueatulizar = input("O que você quer atualizar \nNome \nEmail \nTelefone \nResposta: ").lower()
+            novainfo = input("Digite a nova atulização: ")
+            userObj.atualizarUsuario(oqueatulizar, novainfo, idatulizar)
+            print("Atualização realizada com sucesso!\n")
+
+        elif caminho == 0:
+            print("Encerrando... \n")
+            break
+
+        else:
+            print("Comando não encontrado! Selecione uma opção valida \n")
+
+def menu_livro(livObj):
+    while True:
+        caminho = int(input("1 - Adicionar novo livro \n2 - remover livro \n3 - listar \n4 - atualizar livro \n0 - sair \nResposta: "))
+        if caminho == 1:
+            titulo = str(input("Digite o título do livro: "))
+            autor = str(input("Digite o autor do livro: "))
+            ano = int(input("Digite o ano de publicação: "))
+            qnt = int(input("Digite a quantidade de livros para estoque: "))
+
+            livObj.novoLivro(titulo, autor, ano, qnt)
+            print("Livro adicionado no estoque!\n")
+
+        elif caminho == 2:
+            idremocao = int(input("Digite o do livro para remoção: "))
+            livObj.removerLivro(idremocao)
+            print("Livro removido do estoque com sucesso!\n")
+
+        elif caminho == 3:
+            livros = livObj.listarLivros()
+            for livro in livros:
+                print(f"{livro}\n")
+
+        elif caminho == 4:
+            idatulizar = int(input("Digite ID do livro para atualização: "))
+            oqueatulizar = input("O que você quer atualizar? \nTitulo \nAutor \nAno \nQuantidade \nResposta:").lower()
+            if oqueatulizar == "quantidade":
+                oqueatulizar = "quantidade_disponivel"
+    
+            if oqueatulizar == "quantidade_disponivel" or oqueatulizar == "ano":
+                novainfo = int(input("Nova informação: "))
+                livObj.atulizarLivro(oqueatulizar, novainfo, idatulizar)
+                print("Atualizado com sucesso!")
+    
+            elif oqueatulizar == "titulo" or oqueatulizar == "autor":
+                novainfo = input("Nova informação: ")
+                livObj.atulizarLivro(oqueatulizar, novainfo, idatulizar)
+                print("Atualizado com sucesso!")
+
+            elif caminho == 0:
+                print("Encerrando...")
+                break
+
+            else:
+                print("Comando não encontrado! Selecione uma opção valida \n")
 
 
-#menu_livros(livObj)
+
+
+#menu_usuario(userObj)
+menu_livro(livObj)
