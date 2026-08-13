@@ -36,23 +36,3 @@ class Bancodados():
         except Exception as e:
             print(f"An error Occured: {e}")
         
-
-
-
-"""class Vendedos():
-    def __init__(self, nome): 
-        self.nome = nome
-        self.vendas = 0 
-
-    def vendeu(self, vendas):
-        self.vendas = vendas
-
-    def bateu_meta(self, meta):
-        if self.vendas > meta:
-            print(f"{self.nome} bateu a meta") 
-        else:
-            print(f"{self.nome} não bateu a meta") 
-
-vendedor1 =  Vendedos("Mendes")
-vendedor1.vendeu(100)
-vendedor1.bateu_meta(500)"""
