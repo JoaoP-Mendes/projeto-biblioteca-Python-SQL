@@ -31,10 +31,10 @@ class Emprestimo():
 
                     registro = f"INSERT INTO emprestimo (livro_id, usuario_id, data_emprestimo, status) VALUES ({idlivro}, {idusuario}, '{hoje}', 'emprestado')"
 
-                    id_emprestimo = self.conexao.executar(registro) #Por algum motivo duplica o Script e são enviados duas vezes o SQL gerando duplicidadeemprestismo 
-                    print(f"Emprestimo realizado! Anone o ID desse emprestimo {id_emprestimo}")
+                    id_emprestimo = self.conexao.executar(registro) 
+                    print(f"Emprestimo realizado! Anote o ID desse emprestimo {id_emprestimo}")
                 else:
-                    print(f"Não há livros disponíveis")
+                    print(f"No momento, esse livro não está disponível\n")
         except IndexError as e:
             print("Usuário ou livro não encontrado, por favor, confirme o ID antes de prosseguir")
         except Exception as e:
@@ -57,7 +57,6 @@ class Emprestimo():
             novaquantidade = quantidadelivros + 1
 
             self.livro.atulizarLivro("quantidade_disponivel", novaquantidade, resultadolivroid)
-            print("Devolução realizada com sucesso\n")
         except Exception as e:
             print(f"O erro é esse: {e}")
 
