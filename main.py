@@ -1,7 +1,7 @@
-from banco import Bancodados
-from livro import Livro
-from emprestimo import Emprestimo
-from usuario import Usuario
+from banco.banco import Bancodados
+from modelos.livro import Livro
+from modelos.emprestimo import Emprestimo
+from modelos.usuario import Usuario
 
 connObj = Bancodados()
 connObj.conectar()

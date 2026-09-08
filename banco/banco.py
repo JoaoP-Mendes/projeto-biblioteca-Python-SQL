@@ -1,5 +1,5 @@
 import pymysql.connections
-from config import DB_CONFIG
+from configura import DB_CONFIG
 
 
 class Bancodados():
@@ -20,10 +20,10 @@ class Bancodados():
         except Exception as e:
               print(f"An error Occured: {e}")
 
-    def executar(self, query):
+    def executar(self, query, valor = ()):
         try:
             cursor = self.conexao.cursor()
-            cursor.execute(query)
+            cursor.execute(query, valor)
 
             if query.strip().upper().startswith("SELECT"):
                 resultado = cursor.fetchall()
@@ -34,5 +34,5 @@ class Bancodados():
 
 
         except Exception as e:
-            print(f"An error Occured: {e}")
+            raise
         
